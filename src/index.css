@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply text-noir-900 bg-cream-50 antialiased font-sans tracking-tight;
+    font-feature-settings: "ss01", "ss02", "cv01", "cv02";
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-editorial, .font-serif, .font-heading {
+    font-family: 'Clash Display', 'Inter', sans-serif;
+    @apply tracking-tight font-bold;
+  }
+}
+
+@layer utilities {
+  .glass-luxury {
+    background: rgba(250, 247, 242, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(212, 175, 55, 0.18);
+  }
+
+  .glass-noir {
+    background: rgba(10, 10, 10, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .text-gold-gradient {
+    background: linear-gradient(135deg, #E5C378 0%, #D4AF37 50%, #A6823F 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .border-gold-gradient {
+    border-image: linear-gradient(135deg, #E5C378 0%, #D4AF37 100%) 1;
+  }
+}
+
+/* Custom Luxury Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FAF7F2;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #DBCBB8;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #C5A059;
+}
