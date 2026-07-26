@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingBag, Search, Menu, X, Sparkles, Heart } from 'lucide-react';
+import { ShoppingBag, Search, Menu, X, Sparkles, Shield, Database } from 'lucide-react';
 import { useCart } from '../hooks/useCart';
 
 export const Navbar = () => {
@@ -33,12 +33,12 @@ export const Navbar = () => {
         <div className="flex items-center justify-between h-24">
           
           {/* Desktop Left Nav Links */}
-          <nav className="hidden lg:flex items-center space-x-10">
+          <nav className="hidden lg:flex items-center space-x-8">
             {[
               { label: 'Collection', path: '/shop' },
               { label: 'Haute Couture', path: '/shop?category=Haute%20Couture' },
               { label: 'Leather Goods', path: '/shop?category=Leather%20Goods' },
-              { label: 'Fine Jewelry', path: '/shop?category=Fine%20Jewelry' },
+              { label: 'Admin Portal', path: '/admin/orders' },
             ].map((link) => {
               const active = isActive(link.path);
               return (
@@ -62,9 +62,9 @@ export const Navbar = () => {
             })}
           </nav>
 
-          {/* Brand Logo - Center/Left Editorial Monogram */}
+          {/* Brand Logo */}
           <Link to="/" className="flex flex-col items-center group">
-            <span className="font-serif text-2xl sm:text-3xl tracking-[0.25em] font-extrabold text-noir-900 group-hover:text-champagne-600 transition-colors uppercase">
+            <span className="font-heading text-2xl sm:text-3xl tracking-[0.25em] font-extrabold text-noir-900 group-hover:text-champagne-600 transition-colors uppercase">
               RIVERRA<span className="text-champagne-500 font-normal">N</span>
             </span>
             <span className="text-[9px] font-sans font-bold tracking-[0.4em] uppercase text-champagne-600 mt-0.5">
@@ -147,7 +147,7 @@ export const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Drawer Navigation with Framer Motion AnimatePresence */}
+      {/* Mobile Drawer Navigation */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
@@ -167,40 +167,18 @@ export const Navbar = () => {
               <Search className="w-4 h-4 text-champagne-600 absolute right-4 top-3.5" />
             </form>
 
-            <nav className="flex flex-col space-y-4 font-serif text-lg text-noir-900">
-              <Link
-                to="/"
-                onClick={() => setMobileMenuOpen(false)}
-                className="py-1 border-b border-cream-200"
-              >
+            <nav className="flex flex-col space-y-4 font-heading text-lg text-noir-900">
+              <Link to="/" onClick={() => setMobileMenuOpen(false)} className="py-1 border-b border-cream-200">
                 Home Editorial
               </Link>
-              <Link
-                to="/shop"
-                onClick={() => setMobileMenuOpen(false)}
-                className="py-1 border-b border-cream-200"
-              >
+              <Link to="/shop" onClick={() => setMobileMenuOpen(false)} className="py-1 border-b border-cream-200">
                 Full Collection
               </Link>
-              <Link
-                to="/shop?category=Haute%20Couture"
-                onClick={() => setMobileMenuOpen(false)}
-                className="py-1 border-b border-cream-200 text-sm font-sans uppercase tracking-widest text-champagne-600"
-              >
-                Haute Couture
+              <Link to="/admin/orders" onClick={() => setMobileMenuOpen(false)} className="py-1 border-b border-cream-200 text-sm font-sans uppercase tracking-widest text-champagne-600 flex items-center gap-2">
+                <Database className="w-4 h-4" />
+                <span>Admin Orders Portal</span>
               </Link>
-              <Link
-                to="/shop?category=Leather%20Goods"
-                onClick={() => setMobileMenuOpen(false)}
-                className="py-1 border-b border-cream-200 text-sm font-sans uppercase tracking-widest text-champagne-600"
-              >
-                Leather Goods
-              </Link>
-              <Link
-                to="/cart"
-                onClick={() => setMobileMenuOpen(false)}
-                className="py-1 flex items-center justify-between text-sm font-sans font-bold uppercase tracking-widest"
-              >
+              <Link to="/cart" onClick={() => setMobileMenuOpen(false)} className="py-1 flex items-center justify-between text-sm font-sans font-bold uppercase tracking-widest">
                 <span>Shopping Bag</span>
                 <span className="px-2 py-0.5 bg-noir-900 text-cream-50 rounded-full text-xs">
                   {totalItemsCount} items

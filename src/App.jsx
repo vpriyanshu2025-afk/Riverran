@@ -9,6 +9,7 @@ import { Shop } from './pages/Shop';
 import { ProductDetail } from './pages/ProductDetail';
 import { Cart } from './pages/Cart';
 import { Checkout } from './pages/Checkout';
+import { AdminOrders } from './pages/AdminOrders';
 import { NotFound } from './pages/NotFound';
 import { PageTransition } from './components/animations/PageTransition';
 import { useCart } from './hooks/useCart';
@@ -45,6 +46,8 @@ export const App = () => {
             <Route path="/product/:id" element={<PageTransition><ProductDetail /></PageTransition>} />
             <Route path="/cart" element={<PageTransition><Cart /></PageTransition>} />
             <Route path="/checkout" element={<PageTransition><Checkout /></PageTransition>} />
+            <Route path="/admin/orders" element={<PageTransition><AdminOrders /></PageTransition>} />
+            <Route path="/admin" element={<PageTransition><AdminOrders /></PageTransition>} />
             <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
           </Routes>
         </AnimatePresence>

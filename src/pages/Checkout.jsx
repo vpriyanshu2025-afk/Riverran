@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useCart } from '../hooks/useCart';
 import { formatCurrency } from '../utils/formatCurrency';
+import { saveOrderToFirestore } from '../utils/firebase';
 import {
   Truck,
   ArrowRight,
@@ -17,6 +18,7 @@ import {
   AlertCircle,
   CheckCircle2,
   Trash2,
+  Database,
 } from 'lucide-react';
 
 export const Checkout = () => {
@@ -44,6 +46,7 @@ export const Checkout = () => {
   const [orderComplete, setOrderComplete] = useState(false);
   const [orderId, setOrderId] = useState('');
   const [whatsappUrl, setWhatsappUrl] = useState('');
+  const [savedToDb, setSavedToDb] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -54,7 +57,7 @@ export const Checkout = () => {
   };
 
   /**
-   * Validate required fields before order submission
+   * Validate required fields
    */
   const validateForm = () => {
     const newErrors = {};
@@ -70,9 +73,9 @@ export const Checkout = () => {
   };
 
   /**
-   * Generate formatted WhatsApp order message and redirect
+   * Save order to Firestore AND launch WhatsApp
    */
-  const handleWhatsAppCheckout = (e) => {
+  const handleWhatsAppCheckout = async (e) => {
     e.preventDefault();
 
     if (!validateForm()) {
@@ -84,7 +87,35 @@ export const Checkout = () => {
     const generatedOrderId = 'ATELIER-' + Math.floor(100000 + Math.random() * 900000);
     setOrderId(generatedOrderId);
 
-    // Build Product Details for WhatsApp Message
+    // 1. Prepare Order Document for Firestore
+    const orderPayload = {
+      orderRef: generatedOrderId,
+      storeName: 'Riverran',
+      customer: { ...formData },
+      products: cart.map((item) => ({
+        id: item.product.id,
+        name: item.product.name,
+        color: item.product.color || 'Champagne Satin',
+        size: item.product.size || 'M',
+        quantity: item.quantity,
+        price: item.product.price,
+        image: item.product.image,
+      })),
+      totalQuantity: cart.reduce((acc, i) => acc + i.quantity, 0),
+      pricing: {
+        subtotal,
+        shippingFee,
+        estimatedTax,
+        grandTotal,
+      },
+      status: 'Pending',
+    };
+
+    // 2. Save Order to Firestore DB
+    await saveOrderToFirestore(orderPayload);
+    setSavedToDb(true);
+
+    // 3. Format WhatsApp Text Message
     const formattedProducts = cart
       .map((item, index) => {
         const p = item.product;
@@ -98,7 +129,6 @@ export const Checkout = () => {
       })
       .join('\n\n');
 
-    // Build Complete WhatsApp Message
     const messageText = `🛍️ *STORE: RIVERRAN*
 *ORDER REF:* ${generatedOrderId}
 ----------------------------------
@@ -123,7 +153,7 @@ ${formData.orderNotes ? `\n📝 *ORDER NOTES:*\n"${formData.orderNotes}"` : ''}
 ----------------------------------
 Thank you for shopping with Riverran!`;
 
-    // Construct wa.me URL targeting 917291817567
+    // 4. Construct WhatsApp URL
     const cleanNumber = storeWhatsAppNumber.replace(/[^0-9]/g, '');
     const url = `https://wa.me/${cleanNumber}?text=${encodeURIComponent(messageText)}`;
     setWhatsappUrl(url);
@@ -131,10 +161,8 @@ Thank you for shopping with Riverran!`;
     setTimeout(() => {
       setIsSubmitting(false);
       setOrderComplete(true);
-      // Open WhatsApp in new tab
       window.open(url, '_blank');
-      // Shopping cart is kept intact until confirmation
-    }, 1200);
+    }, 1000);
   };
 
   const handleConfirmAndClearCart = () => {
@@ -155,14 +183,15 @@ Thank you for shopping with Riverran!`;
         </div>
 
         <div className="space-y-2">
-          <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-champagne-600">
-            Store: Riverran
+          <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-champagne-600 flex items-center justify-center gap-1.5">
+            <Database className="w-3.5 h-3.5 text-emerald-700" />
+            <span>Saved to Firestore DB & Dispatched to WhatsApp</span>
           </span>
           <h1 className="font-heading text-3xl sm:text-4xl font-bold text-noir-900">
-            WhatsApp Order Message Sent
+            Order Saved & Launched
           </h1>
           <p className="text-xs text-noir-500 max-w-md mx-auto tracking-wide font-sans">
-            Your WhatsApp message for order <strong className="text-noir-900 font-heading">{orderId}</strong> has been generated and opened in WhatsApp.
+            Your order <strong className="text-noir-900 font-heading">{orderId}</strong> is registered in Cloud Firestore DB with status <strong className="text-amber-600">Pending</strong> and sent to WhatsApp.
           </p>
         </div>
 
@@ -170,6 +199,12 @@ Thank you for shopping with Riverran!`;
           <div className="flex justify-between border-b border-cream-200 pb-3">
             <span className="text-noir-500 font-medium uppercase tracking-wider">Store Name</span>
             <span className="font-heading font-bold text-noir-900 text-sm">Riverran</span>
+          </div>
+          <div className="flex justify-between border-b border-cream-200 pb-3">
+            <span className="text-noir-500 font-medium uppercase tracking-wider">Firestore DB Status</span>
+            <span className="px-2.5 py-0.5 bg-amber-100 text-amber-800 font-bold rounded-full text-[10px] uppercase">
+              Pending
+            </span>
           </div>
           <div className="flex justify-between border-b border-cream-200 pb-3">
             <span className="text-noir-500 font-medium uppercase tracking-wider">Customer</span>
@@ -180,7 +215,7 @@ Thank you for shopping with Riverran!`;
             <span className="font-bold text-noir-900">{formData.phone}</span>
           </div>
           <div className="flex justify-between border-b border-cream-200 pb-3">
-            <span className="text-noir-500 font-medium uppercase tracking-wider">Complete Address</span>
+            <span className="text-noir-500 font-medium uppercase tracking-wider">Address</span>
             <span className="font-bold text-noir-900 text-right">
               {formData.address}, {formData.city}, {formData.state} - {formData.pinCode}
             </span>
@@ -189,10 +224,6 @@ Thank you for shopping with Riverran!`;
             <span className="text-noir-500 font-medium uppercase tracking-wider">Grand Total</span>
             <span className="font-heading font-bold text-champagne-600 text-base">{formatCurrency(grandTotal)}</span>
           </div>
-        </div>
-
-        <div className="p-4 bg-amber-50 rounded-2xl border border-amber-200 text-xs text-amber-900 max-w-md mx-auto font-medium">
-          💡 Your shopping cart has been kept intact. Click <strong>"Clear Bag & Finish"</strong> once you confirm sending the WhatsApp message.
         </div>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
@@ -228,14 +259,15 @@ Thank you for shopping with Riverran!`;
       className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-10 space-y-10"
     >
       <div>
-        <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-champagne-600">
-          Store: Riverran
+        <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-champagne-600 flex items-center gap-1.5">
+          <Database className="w-3.5 h-3.5 text-champagne-600" />
+          <span>Firestore DB + WhatsApp Checkout</span>
         </span>
         <h1 className="font-heading text-3xl sm:text-4xl font-bold text-noir-900 tracking-tight mt-1">
-          WhatsApp Checkout
+          WhatsApp & Firestore Order Checkout
         </h1>
         <p className="text-xs text-noir-500 mt-2 font-sans">
-          Complete the required customer fields below to generate your formatted WhatsApp order message sent to <strong className="text-noir-900">+91 7291817567</strong>.
+          Your order will be saved to Firestore DB with status <strong>Pending</strong> and sent via WhatsApp to <strong>+91 7291817567</strong>.
         </p>
       </div>
 
@@ -444,12 +476,12 @@ Thank you for shopping with Riverran!`;
             </div>
           </div>
 
-          {/* Store Target Phone Number Configurator */}
+          {/* Store WhatsApp Target Number Configurator */}
           <div className="bg-cream-100/70 p-6 rounded-3xl border border-champagne-300/60 space-y-2 text-xs">
             <div className="flex justify-between items-center">
               <span className="font-bold text-noir-900 uppercase tracking-wider text-[10px] flex items-center gap-1.5">
                 <MessageSquare className="w-4 h-4 text-emerald-700" />
-                <span>WhatsApp Target Number</span>
+                <span>WhatsApp Target Phone Number</span>
               </span>
               <input
                 type="text"
@@ -459,7 +491,7 @@ Thank you for shopping with Riverran!`;
               />
             </div>
             <p className="text-[11px] text-noir-500">
-              Target URL: <code className="font-mono bg-white px-1.5 py-0.5 rounded text-emerald-800 font-bold">https://wa.me/{storeWhatsAppNumber}</code>
+              Orders will be saved to Firestore DB and pre-addressed to <code className="font-mono bg-white px-1.5 py-0.5 rounded text-emerald-800 font-bold">https://wa.me/{storeWhatsAppNumber}</code>
             </p>
           </div>
 
@@ -520,11 +552,11 @@ Thank you for shopping with Riverran!`;
             className="w-full py-4 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs uppercase tracking-[0.25em] rounded-full shadow-lg transition-all flex items-center justify-center gap-3"
           >
             <MessageSquare className="w-4 h-4" />
-            <span>{isSubmitting ? 'Formatting Message...' : 'Order on WhatsApp'}</span>
+            <span>{isSubmitting ? 'Saving to DB & Message...' : 'Order on WhatsApp'}</span>
           </button>
 
           <p className="text-[10px] text-center text-noir-400 font-sans">
-            Launches WhatsApp addressing target number <strong>+91 7291817567</strong>.
+            Saves order document to Firestore DB & opens WhatsApp pre-addressed to <strong>+91 7291817567</strong>.
           </p>
         </div>
 
