@@ -13,7 +13,6 @@ import {
   ShieldCheck,
   ArrowLeft,
   CheckCircle2,
-  Sparkles,
 } from 'lucide-react';
 
 export const Cart = () => {
@@ -25,7 +24,6 @@ export const Cart = () => {
     subtotal,
     shippingFee,
     estimatedTax,
-    freeShippingThreshold,
   } = useCart();
 
   const navigate = useNavigate();
@@ -41,7 +39,7 @@ export const Cart = () => {
 
     if (promoInput.trim().toUpperCase() === 'LUXURY20') {
       setDiscountPercent(20);
-      setPromoSuccess('20% Private Atelier Privilege applied!');
+      setPromoSuccess('20% Exclusive VIP Discount applied!');
     } else {
       setPromoError('Invalid code. Try LUXURY20');
     }
@@ -58,9 +56,9 @@ export const Cart = () => {
           <ShoppingBag className="w-10 h-10" />
         </div>
         <div className="space-y-2">
-          <h2 className="font-serif text-3xl font-bold text-noir-900">Your Shopping Bag is Empty</h2>
+          <h2 className="font-heading text-3xl font-bold text-noir-900">Your Shopping Bag is Empty</h2>
           <p className="text-noir-500 text-xs max-w-md mx-auto tracking-wide">
-            Your bag is currently empty. Explore our haute couture collection to select handcrafted luxury pieces.
+            Your bag is currently empty. Explore our collection to select handcrafted luxury pieces.
           </p>
         </div>
         <Link
@@ -88,7 +86,7 @@ export const Cart = () => {
           <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-champagne-600">
             Shopping Bag Overview
           </span>
-          <h1 className="font-serif text-3xl sm:text-4xl font-bold text-noir-900 tracking-tight mt-1">
+          <h1 className="font-heading text-3xl sm:text-4xl font-bold text-noir-900 tracking-tight mt-1">
             Your Selected Pieces
           </h1>
         </div>
@@ -125,7 +123,7 @@ export const Cart = () => {
                     </span>
                     <Link
                       to={`/product/${product.id}`}
-                      className="block font-serif text-lg font-bold text-noir-900 hover:text-champagne-600 transition-colors mt-0.5"
+                      className="block font-heading text-lg font-bold text-noir-900 hover:text-champagne-600 transition-colors mt-0.5"
                     >
                       {product.name}
                     </Link>
@@ -159,7 +157,7 @@ export const Cart = () => {
                   </div>
 
                   <div className="text-right">
-                    <div className="font-serif text-lg font-bold text-noir-900">
+                    <div className="font-heading text-lg font-bold text-noir-900">
                       {formatCurrency(product.price * quantity)}
                     </div>
                     <div className="text-[11px] text-noir-400 font-sans">
@@ -182,7 +180,7 @@ export const Cart = () => {
 
         {/* Order Summary Sidebar */}
         <div className="bg-white p-8 rounded-3xl border border-champagne-300/40 shadow-sm space-y-6">
-          <h3 className="font-serif text-xl font-bold text-noir-900 pb-4 border-b border-cream-200">
+          <h3 className="font-heading text-xl font-bold text-noir-900 pb-4 border-b border-cream-200">
             Summary Breakdown
           </h3>
 
@@ -190,7 +188,7 @@ export const Cart = () => {
           <form onSubmit={handleApplyPromo} className="space-y-2">
             <label className="text-[10px] font-bold uppercase tracking-[0.25em] text-noir-500 flex items-center gap-1.5">
               <Tag className="w-3.5 h-3.5 text-champagne-600" />
-              <span>Privilege Code</span>
+              <span>Promo Code</span>
             </label>
             <div className="flex gap-2">
               <input
@@ -220,12 +218,12 @@ export const Cart = () => {
           <div className="space-y-3 text-xs pt-4 border-t border-cream-200">
             <div className="flex justify-between text-noir-600">
               <span>Items Subtotal</span>
-              <span className="font-serif font-bold text-noir-900">{formatCurrency(subtotal)}</span>
+              <span className="font-heading font-bold text-noir-900">{formatCurrency(subtotal)}</span>
             </div>
 
             {discountPercent > 0 && (
               <div className="flex justify-between text-emerald-700 font-semibold">
-                <span>Privilege Discount ({discountPercent}%)</span>
+                <span>VIP Discount ({discountPercent}%)</span>
                 <span>-{formatCurrency(discountAmount)}</span>
               </div>
             )}
@@ -234,7 +232,7 @@ export const Cart = () => {
               <span>Express Courier Shipping</span>
               <span className="font-bold text-noir-900">
                 {shippingFee === 0 ? (
-                  <strong className="text-emerald-700 font-serif">COMPLIMENTARY</strong>
+                  <strong className="text-emerald-700 font-heading">FREE</strong>
                 ) : (
                   formatCurrency(shippingFee)
                 )}
@@ -242,11 +240,11 @@ export const Cart = () => {
             </div>
 
             <div className="flex justify-between text-noir-600">
-              <span>Estimated VAT / Sales Tax</span>
-              <span className="font-serif font-bold text-noir-900">{formatCurrency(estimatedTax)}</span>
+              <span>Estimated Sales Tax</span>
+              <span className="font-heading font-bold text-noir-900">{formatCurrency(estimatedTax)}</span>
             </div>
 
-            <div className="flex justify-between text-xl font-bold font-serif text-noir-900 pt-4 border-t border-cream-200">
+            <div className="flex justify-between text-xl font-bold font-heading text-noir-900 pt-4 border-t border-cream-200">
               <span>Grand Total</span>
               <span className="text-champagne-600">{formatCurrency(finalGrandTotal)}</span>
             </div>

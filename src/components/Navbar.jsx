@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingBag, Search, Menu, X, Sparkles, Shield, Database } from 'lucide-react';
+import { ShoppingBag, Search, Menu, X, Database } from 'lucide-react';
 import { useCart } from '../hooks/useCart';
 
 export const Navbar = () => {
@@ -36,7 +36,7 @@ export const Navbar = () => {
           <nav className="hidden lg:flex items-center space-x-8">
             {[
               { label: 'Collection', path: '/shop' },
-              { label: 'Haute Couture', path: '/shop?category=Haute%20Couture' },
+              { label: 'Luxury Apparel', path: '/shop?category=Luxury%20Apparel' },
               { label: 'Leather Goods', path: '/shop?category=Leather%20Goods' },
               { label: 'Admin Portal', path: '/admin/orders' },
             ].map((link) => {
@@ -68,7 +68,7 @@ export const Navbar = () => {
               RIVERRA<span className="text-champagne-500 font-normal">N</span>
             </span>
             <span className="text-[9px] font-sans font-bold tracking-[0.4em] uppercase text-champagne-600 mt-0.5">
-              ATELIER • PARIS
+              LUXURY FASHION STORE
             </span>
           </Link>
 
@@ -88,7 +88,7 @@ export const Navbar = () => {
                   <input
                     type="text"
                     autoFocus
-                    placeholder="Search Atelier..."
+                    placeholder="Search collection..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="w-full pl-3 pr-8 py-1.5 text-xs bg-cream-100 border-b border-champagne-400 focus:outline-none text-noir-900 font-sans tracking-wide"

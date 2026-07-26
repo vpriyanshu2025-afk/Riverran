@@ -37,8 +37,8 @@ export const Home = () => {
             <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-champagne-600">
               Handcrafted Categories
             </span>
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-noir-900 tracking-tight mt-1">
-              Explore the Atelier
+            <h2 className="font-heading text-3xl sm:text-4xl font-bold text-noir-900 tracking-tight mt-1">
+              Shop by Category
             </h2>
           </div>
           <Link
@@ -65,7 +65,7 @@ export const Home = () => {
                 <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-champagne-600">
                   Category 0{idx + 1}
                 </span>
-                <h3 className="font-serif text-xl font-bold text-noir-900 group-hover:text-champagne-600 transition-colors mt-1">
+                <h3 className="font-heading text-xl font-bold text-noir-900 group-hover:text-champagne-600 transition-colors mt-1">
                   {category}
                 </h3>
                 <p className="text-xs text-noir-500 mt-2 font-sans font-medium">{count} Curated Pieces</p>
@@ -75,7 +75,7 @@ export const Home = () => {
         </div>
       </motion.section>
 
-      {/* Runway Collection Grid */}
+      {/* Featured Collection Grid */}
       <motion.section
         variants={sectionVariants}
         initial="hidden"
@@ -89,8 +89,8 @@ export const Home = () => {
               <Crown className="w-4 h-4 text-champagne-500" />
               <span>Spring 2026 Collection</span>
             </span>
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-noir-900 tracking-tight mt-1">
-              The Runway Edit
+            <h2 className="font-heading text-3xl sm:text-4xl font-bold text-noir-900 tracking-tight mt-1">
+              Featured Arrivals
             </h2>
           </div>
           <Link
@@ -122,19 +122,19 @@ export const Home = () => {
           
           <div className="relative z-10 max-w-xl space-y-6">
             <span className="px-4 py-1.5 bg-champagne-500/20 text-champagne-300 text-[10px] font-bold rounded-full uppercase tracking-[0.25em] border border-champagne-400/30">
-              Private Atelier Privilege
+              Exclusive VIP Privilege
             </span>
-            <h2 className="font-serif text-3xl sm:text-5xl font-bold tracking-tight leading-tight">
-              Enjoy 20% Off Your First Couture Order
+            <h2 className="font-heading text-3xl sm:text-5xl font-bold tracking-tight leading-tight">
+              Enjoy 20% Off Your First Order
             </h2>
             <p className="text-noir-300 text-xs sm:text-sm leading-relaxed tracking-wide">
-              Apply private invitation code <strong className="bg-cream-50/10 px-3 py-1 rounded-md text-champagne-400 font-mono">LUXURY20</strong> at checkout for complimentary worldwide courier shipping and 20% off.
+              Apply private code <strong className="bg-cream-50/10 px-3 py-1 rounded-md text-champagne-400 font-mono">LUXURY20</strong> at checkout for complimentary express shipping and 20% off.
             </p>
             <Link
-              to="/shop?category=Haute%20Couture"
+              to="/shop?category=Luxury%20Apparel"
               className="inline-flex items-center gap-3 px-8 py-4 bg-champagne-500 hover:bg-champagne-400 text-noir-950 font-extrabold text-xs uppercase tracking-[0.25em] rounded-full shadow-gold transition-all transform hover:scale-105"
             >
-              <span>Claim Atelier Privilege</span>
+              <span>Claim VIP Discount</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -149,9 +149,9 @@ export const Home = () => {
             <div className="w-12 h-12 rounded-2xl bg-cream-100 text-champagne-600 flex items-center justify-center mx-auto md:mx-0">
               <Gem className="w-6 h-6" />
             </div>
-            <h4 className="font-serif text-xl font-bold text-noir-900">100% Certified Materials</h4>
+            <h4 className="font-heading text-xl font-bold text-noir-900">100% Certified Materials</h4>
             <p className="text-xs text-noir-600 leading-relaxed">
-              Every silk thread, cashmere weave, and Fairmined diamond carries an individual GIA / Loro Piana certificate of origin.
+              Every silk thread, cashmere weave, and certified diamond carries a verified certificate of authenticity.
             </p>
           </div>
 
@@ -159,9 +159,9 @@ export const Home = () => {
             <div className="w-12 h-12 rounded-2xl bg-cream-100 text-champagne-600 flex items-center justify-center mx-auto md:mx-0">
               <ShieldCheck className="w-6 h-6" />
             </div>
-            <h4 className="font-serif text-xl font-bold text-noir-900">Lifetime Atelier Service</h4>
+            <h4 className="font-heading text-xl font-bold text-noir-900">Lifetime Care Guarantee</h4>
             <p className="text-xs text-noir-600 leading-relaxed">
-              Complimentary garment alterations, leather conditioning, and jewelry polishing for all Riverran Atelier items.
+              Complimentary garment alterations, leather conditioning, and jewelry polishing for all Riverran items.
             </p>
           </div>
 
@@ -169,9 +169,9 @@ export const Home = () => {
             <div className="w-12 h-12 rounded-2xl bg-cream-100 text-champagne-600 flex items-center justify-center mx-auto md:mx-0">
               <Award className="w-6 h-6" />
             </div>
-            <h4 className="font-serif text-xl font-bold text-noir-900">Worldwide Express Delivery</h4>
+            <h4 className="font-heading text-xl font-bold text-noir-900">Worldwide Express Delivery</h4>
             <p className="text-xs text-noir-600 leading-relaxed">
-              Direct dispatch from Paris and Milan via climate-neutral express courier with full transit insurance.
+              Direct dispatch via climate-neutral express courier with full transit insurance on every order.
             </p>
           </div>
 

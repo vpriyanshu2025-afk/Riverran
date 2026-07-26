@@ -23,7 +23,6 @@ import {
   Sparkles,
   Ruler,
   Clock,
-  RotateCcw,
 } from 'lucide-react';
 
 export const ProductDetail = () => {
@@ -33,14 +32,12 @@ export const ProductDetail = () => {
 
   const product = PRODUCTS.find((p) => p.id === id) || PRODUCTS[0];
 
-  // Track item view for "Recently Viewed"
   useEffect(() => {
     if (product) {
       addRecentlyViewed(product);
     }
   }, [id, product]);
 
-  // Gallery Angles state
   const galleryImages = [
     product.image,
     'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1000&q=80',
@@ -51,10 +48,9 @@ export const ProductDetail = () => {
   const [activeImage, setActiveImage] = useState(galleryImages[0]);
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
-  // Variant States
   const colors = [
     { name: 'Champagne Satin', hex: '#D4AF37' },
-    { name: 'Midnight Noir', hex: '#0A0A0A' },
+    { name: 'Midnight Black', hex: '#0A0A0A' },
     { name: 'Cream Porcelain', hex: '#F5EFE6' },
     { name: 'Royal Navy', hex: '#1B365D' },
   ];
@@ -63,11 +59,9 @@ export const ProductDetail = () => {
   const [quantity, setQuantity] = useState(1);
   const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
 
-  // Delivery Estimator state
-  const [userZip, setUserZip] = useState('10001');
-  const [zipSubmitted, setZipSubmitted] = useState('10001');
+  const [userZip, setUserZip] = useState('400001');
+  const [zipSubmitted, setZipSubmitted] = useState('400001');
 
-  // Accordion open/close states
   const [openAccordions, setOpenAccordions] = useState({
     craftsmanship: true,
     care: false,
@@ -116,17 +110,16 @@ export const ProductDetail = () => {
           <span>Back to Collection</span>
         </button>
         <span className="text-[10px] uppercase font-bold tracking-[0.3em] text-champagne-600">
-          Atelier Item #{product.id}
+          Product Item #{product.id}
         </span>
       </div>
 
-      {/* Main Split Layout: Left Gallery + Right STICKY Purchase Panel */}
+      {/* Main Split Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
         
-        {/* Left Column: Image Gallery (7 Cols) */}
+        {/* Left Column: Image Gallery */}
         <div className="lg:col-span-7 space-y-6">
           
-          {/* Main Large Image Preview Frame with Lightbox Trigger */}
           <div className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-white border border-champagne-300/40 shadow-luxury group cursor-zoom-in">
             <img
               src={activeImage}
@@ -140,7 +133,6 @@ export const ProductDetail = () => {
               </span>
             )}
             
-            {/* Zoom Icon Overlay Indicator */}
             <button
               onClick={() => setLightboxOpen(true)}
               className="absolute bottom-6 right-6 p-3 rounded-full glass-luxury backdrop-blur-md text-noir-900 opacity-80 hover:opacity-100 transition-opacity shadow-sm"
@@ -150,7 +142,6 @@ export const ProductDetail = () => {
             </button>
           </div>
 
-          {/* Gallery Thumbnails Strip */}
           <div className="grid grid-cols-4 gap-4">
             {galleryImages.map((imgUrl, idx) => (
               <button
@@ -167,18 +158,17 @@ export const ProductDetail = () => {
             ))}
           </div>
 
-          {/* Accordion Sections (Scrollable Left Side) */}
+          {/* Accordion Sections */}
           <div className="space-y-4 pt-8">
             
-            {/* Accordion 1: Atelier Craftsmanship */}
             <div className="bg-white rounded-3xl border border-champagne-300/40 shadow-sm overflow-hidden">
               <button
                 onClick={() => toggleAccordion('craftsmanship')}
-                className="w-full p-6 text-left flex items-center justify-between font-serif text-lg font-bold text-noir-900"
+                className="w-full p-6 text-left flex items-center justify-between font-heading text-lg font-bold text-noir-900"
               >
                 <span className="flex items-center gap-3">
                   <Sparkles className="w-5 h-5 text-champagne-600" />
-                  Atelier Craftsmanship & Materials
+                  Craftsmanship & Materials
                 </span>
                 <ChevronDown
                   className={`w-5 h-5 text-champagne-600 transition-transform duration-300 ${
@@ -196,14 +186,14 @@ export const ProductDetail = () => {
                     className="px-6 pb-6 text-xs text-noir-600 space-y-3 font-sans border-t border-cream-200 pt-4"
                   >
                     <p className="leading-relaxed">
-                      Handcrafted in Paris Atelier using 100% GOTS certified organic Mulberry silk and Loro Piana Mongolian cashmere. Every seam is finished by master artisans.
+                      Handcrafted using certified organic Mulberry silk and pure Mongolian cashmere. Every detail is finished by master craftsmen.
                     </p>
                     {product.specs && (
                       <div className="grid grid-cols-2 gap-3 pt-2">
                         {Object.entries(product.specs).map(([k, v]) => (
                           <div key={k} className="p-3 bg-cream-50 rounded-xl">
                             <span className="font-bold text-noir-500 uppercase tracking-widest text-[9px] block">{k}</span>
-                            <span className="font-serif text-noir-900 font-bold text-xs">{v}</span>
+                            <span className="font-heading text-noir-900 font-bold text-xs">{v}</span>
                           </div>
                         ))}
                       </div>
@@ -213,15 +203,14 @@ export const ProductDetail = () => {
               </AnimatePresence>
             </div>
 
-            {/* Accordion 2: Fabric Care Guidelines */}
             <div className="bg-white rounded-3xl border border-champagne-300/40 shadow-sm overflow-hidden">
               <button
                 onClick={() => toggleAccordion('care')}
-                className="w-full p-6 text-left flex items-center justify-between font-serif text-lg font-bold text-noir-900"
+                className="w-full p-6 text-left flex items-center justify-between font-heading text-lg font-bold text-noir-900"
               >
                 <span className="flex items-center gap-3">
                   <ShieldCheck className="w-5 h-5 text-champagne-600" />
-                  Fabric & Sustainable Preservation
+                  Fabric & Garment Care
                 </span>
                 <ChevronDown
                   className={`w-5 h-5 text-champagne-600 transition-transform duration-300 ${
@@ -239,18 +228,17 @@ export const ProductDetail = () => {
                     className="px-6 pb-6 text-xs text-noir-600 space-y-2 font-sans border-t border-cream-200 pt-4"
                   >
                     <p className="leading-relaxed">
-                      To preserve the natural lustre and texture of silk and cashmere fibers, we recommend specialist luxury dry cleaning only. Store in provided organic cotton garment sleeve away from direct sunlight.
+                      To preserve the natural lustre and texture, we recommend specialist dry cleaning only. Store in the provided cotton sleeve away from direct sunlight.
                     </p>
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
 
-            {/* Accordion 3: Delivery & Returns */}
             <div className="bg-white rounded-3xl border border-champagne-300/40 shadow-sm overflow-hidden">
               <button
                 onClick={() => toggleAccordion('shipping')}
-                className="w-full p-6 text-left flex items-center justify-between font-serif text-lg font-bold text-noir-900"
+                className="w-full p-6 text-left flex items-center justify-between font-heading text-lg font-bold text-noir-900"
               >
                 <span className="flex items-center gap-3">
                   <Truck className="w-5 h-5 text-champagne-600" />
@@ -272,7 +260,7 @@ export const ProductDetail = () => {
                     className="px-6 pb-6 text-xs text-noir-600 space-y-2 font-sans border-t border-cream-200 pt-4"
                   >
                     <p className="leading-relaxed">
-                      Complimentary worldwide express courier delivery on all orders. Items may be returned or exchanged within 30 days of receipt using pre-paid security shipping seals.
+                      Complimentary express courier delivery on all orders. Items may be returned or exchanged within 30 days of delivery.
                     </p>
                   </motion.div>
                 )}
@@ -282,18 +270,17 @@ export const ProductDetail = () => {
           </div>
         </div>
 
-        {/* Right Column: STICKY Purchase Panel (5 Cols) */}
+        {/* Right Column: Sticky Purchase Panel */}
         <div className="lg:col-span-5 sticky top-28 bg-white p-8 sm:p-10 rounded-3xl border border-champagne-300/40 shadow-luxury space-y-8">
           
           <div>
             <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-champagne-600">
               {product.category}
             </span>
-            <h1 className="font-serif text-3xl font-bold text-noir-900 tracking-tight mt-1 leading-snug">
+            <h1 className="font-heading text-3xl font-bold text-noir-900 tracking-tight mt-1 leading-snug">
               {product.name}
             </h1>
 
-            {/* Rating */}
             <div className="flex items-center gap-2 mt-3">
               <div className="flex text-champagne-500">
                 {[...Array(5)].map((_, i) => (
@@ -301,13 +288,13 @@ export const ProductDetail = () => {
                 ))}
               </div>
               <span className="text-xs font-bold text-noir-800">{product.rating}</span>
-              <span className="text-xs text-noir-400 font-sans">({product.reviewsCount} atelier reviews)</span>
+              <span className="text-xs text-noir-400 font-sans">({product.reviewsCount} verified reviews)</span>
             </div>
           </div>
 
           {/* Price Hierarchy */}
           <div className="flex items-baseline gap-3 pb-4 border-b border-cream-200">
-            <span className="font-serif text-3xl font-bold text-noir-900">
+            <span className="font-heading text-3xl font-bold text-noir-900">
               {formatCurrency(product.price)}
             </span>
             {product.originalPrice > product.price && (
@@ -317,15 +304,15 @@ export const ProductDetail = () => {
             )}
             <span className="ml-auto inline-flex items-center gap-1 px-3 py-1 bg-champagne-100 text-champagne-700 text-[10px] font-bold rounded-full uppercase tracking-wider">
               <CheckCircle2 className="w-3.5 h-3.5" />
-              In Atelier Stock
+              In Stock & Ready
             </span>
           </div>
 
-          {/* Color Swatch Selector */}
+          {/* Color Selector */}
           <div className="space-y-3">
             <div className="flex justify-between items-center text-xs font-bold uppercase tracking-widest text-noir-500">
-              <span>Shade / Color</span>
-              <span className="text-noir-900 font-serif">{selectedColor.name}</span>
+              <span>Color Shade</span>
+              <span className="text-noir-900 font-heading">{selectedColor.name}</span>
             </div>
             <div className="flex gap-3">
               {colors.map((c) => (
@@ -419,7 +406,6 @@ export const ProductDetail = () => {
               </motion.button>
             </div>
 
-            {/* Share & Guarantee Details */}
             <div className="flex items-center justify-between text-xs text-noir-500 pt-2 border-t border-cream-200">
               <button
                 onClick={handleShare}
@@ -430,7 +416,7 @@ export const ProductDetail = () => {
               </button>
               <span className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-champagne-600">
                 <ShieldCheck className="w-3.5 h-3.5" />
-                Authentic Haute Garment
+                Authentic Certified Garment
               </span>
             </div>
           </div>
@@ -447,7 +433,7 @@ export const ProductDetail = () => {
                   type="text"
                   value={userZip}
                   onChange={(e) => setUserZip(e.target.value)}
-                  className="w-16 px-2 py-1 text-xs border border-champagne-300 rounded font-mono font-bold text-center"
+                  className="w-20 px-2 py-1 text-xs border border-champagne-300 rounded font-mono font-bold text-center"
                 />
                 <button
                   onClick={() => setZipSubmitted(userZip)}
@@ -463,7 +449,7 @@ export const ProductDetail = () => {
                 <Clock className="w-3.5 h-3.5 text-emerald-700" />
                 <span>Estimated Arrival in <strong>{zipSubmitted}</strong>: <strong>Tuesday, July 28</strong></span>
               </p>
-              <p className="text-[10px] text-noir-400">Dispatch via DHL Express Paris Direct (Complimentary)</p>
+              <p className="text-[10px] text-noir-400">Complimentary Express Courier Shipping</p>
             </div>
           </div>
 
@@ -471,17 +457,64 @@ export const ProductDetail = () => {
 
       </div>
 
-      {/* Related Products Section */}
-      {relatedProducts.length > 0 && (
-        <section className="space-y-8 pt-8">
-          <div>
-            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-champagne-600">
-              Curated Pairing
-            </span>
-            <h3 className="font-serif text-2xl sm:text-3xl font-bold text-noir-900 tracking-tight mt-1">
-              Related Atelier Pieces
-            </h3>
+      {/* Tabs: Specifications & Customer Reviews */}
+      <div className="bg-white rounded-3xl border border-champagne-300/40 shadow-sm p-8 sm:p-12 space-y-8">
+        <div className="flex items-center space-x-8 border-b border-cream-200 pb-4">
+          <button
+            onClick={() => setActiveTab('specs')}
+            className={`font-heading text-lg font-bold pb-2 transition-colors border-b-2 ${
+              activeTab === 'specs'
+                ? 'border-champagne-500 text-noir-900'
+                : 'border-transparent text-noir-400 hover:text-noir-900'
+            }`}
+          >
+            Product Specifications
+          </button>
+          <button
+            onClick={() => setActiveTab('reviews')}
+            className={`font-heading text-lg font-bold pb-2 transition-colors border-b-2 ${
+              activeTab === 'reviews'
+                ? 'border-champagne-500 text-noir-900'
+                : 'border-transparent text-noir-400 hover:text-noir-900'
+            }`}
+          >
+            Verified Client Reviews ({product.reviewsCount})
+          </button>
+        </div>
+
+        {activeTab === 'specs' ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-sans">
+            {product.specs &&
+              Object.entries(product.specs).map(([key, val]) => (
+                <div key={key} className="flex justify-between p-4 bg-cream-50 rounded-2xl border border-champagne-200/50">
+                  <span className="font-semibold text-noir-500 uppercase tracking-widest">{key}</span>
+                  <span className="font-bold text-noir-900 font-heading text-sm">{val}</span>
+                </div>
+              ))}
           </div>
+        ) : (
+          <div className="space-y-4">
+            <div className="p-6 bg-cream-50 rounded-2xl border border-champagne-200/50 space-y-2">
+              <div className="flex items-center justify-between">
+                <h4 className="font-heading font-bold text-noir-900 text-base">Sarah Jenkins</h4>
+                <div className="flex text-champagne-500">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-current" />
+                  ))}
+                </div>
+              </div>
+              <p className="text-xs text-noir-600 leading-relaxed italic">
+                "Pure perfection. The fabric drape and tailoring are breathtaking in person. Arrived in a custom box."
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Recommended Items */}
+      {relatedProducts.length > 0 && (
+        <section className="space-y-8">
+          <h3 className="font-heading text-2xl font-bold text-noir-900">Recommended Additions</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {relatedProducts.map((p) => (
               <ProductCard key={p.id} product={p} />
@@ -497,7 +530,7 @@ export const ProductDetail = () => {
             <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-champagne-600">
               Session History
             </span>
-            <h3 className="font-serif text-2xl sm:text-3xl font-bold text-noir-900 tracking-tight mt-1">
+            <h3 className="font-heading text-2xl sm:text-3xl font-bold text-noir-900 tracking-tight mt-1">
               Recently Viewed Items
             </h3>
           </div>
@@ -509,7 +542,7 @@ export const ProductDetail = () => {
         </section>
       )}
 
-      {/* Fullscreen Lightbox Zoom Modal */}
+      {/* Lightbox Zoom Modal */}
       <AnimatePresence>
         {lightboxOpen && (
           <motion.div
@@ -552,7 +585,7 @@ export const ProductDetail = () => {
               className="bg-white p-8 rounded-3xl max-w-lg w-full space-y-6 shadow-2xl relative border border-champagne-300/40"
             >
               <div className="flex justify-between items-center border-b border-cream-200 pb-4">
-                <h3 className="font-serif text-xl font-bold text-noir-900">Atelier Size Measurements</h3>
+                <h3 className="font-heading text-xl font-bold text-noir-900">Size Measurements</h3>
                 <button
                   onClick={() => setSizeGuideOpen(false)}
                   className="p-1 text-noir-400 hover:text-noir-900"
@@ -592,11 +625,11 @@ export const ProductDetail = () => {
         )}
       </AnimatePresence>
 
-      {/* Mobile Sticky Quick Add Bottom Bar */}
+      {/* Mobile Sticky Quick Add Bar */}
       <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md p-4 border-t border-champagne-300/40 shadow-2xl flex items-center justify-between gap-4">
         <div>
-          <h4 className="font-serif text-sm font-bold text-noir-900 line-clamp-1">{product.name}</h4>
-          <span className="font-serif text-xs font-bold text-champagne-600">{formatCurrency(product.price)}</span>
+          <h4 className="font-heading text-sm font-bold text-noir-900 line-clamp-1">{product.name}</h4>
+          <span className="font-heading text-xs font-bold text-champagne-600">{formatCurrency(product.price)}</span>
         </div>
         <button
           onClick={handleAddToCart}

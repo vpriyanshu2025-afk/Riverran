@@ -25,18 +25,18 @@ export const Checkout = () => {
   const { cart, grandTotal, subtotal, shippingFee, estimatedTax, clearCart } = useCart();
   const navigate = useNavigate();
 
-  // Target WhatsApp Phone Number set to 917291817567
+  // Target WhatsApp Phone Number
   const [storeWhatsAppNumber, setStoreWhatsAppNumber] = useState('917291817567');
 
   // Form State
   const [formData, setFormData] = useState({
-    fullName: 'Caroline de Rothschild',
-    phone: '+1 (555) 234-5678',
-    email: 'caroline@rothschild-atelier.com',
-    address: '14 Rue du Faubourg Saint-Honoré',
-    city: 'Paris',
-    state: 'Île-de-France',
-    pinCode: '75008',
+    fullName: 'Ananya Sharma',
+    phone: '+91 98765 43210',
+    email: 'ananya@riverran-luxury.com',
+    address: '14 Park Street, Bandra West',
+    city: 'Mumbai',
+    state: 'Maharashtra',
+    pinCode: '400001',
     orderNotes: 'Please package in luxury gift wrap if possible.',
   });
 
@@ -46,7 +46,6 @@ export const Checkout = () => {
   const [orderComplete, setOrderComplete] = useState(false);
   const [orderId, setOrderId] = useState('');
   const [whatsappUrl, setWhatsappUrl] = useState('');
-  const [savedToDb, setSavedToDb] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -84,7 +83,7 @@ export const Checkout = () => {
 
     setIsSubmitting(true);
 
-    const generatedOrderId = 'ATELIER-' + Math.floor(100000 + Math.random() * 900000);
+    const generatedOrderId = 'RIVERRAN-' + Math.floor(100000 + Math.random() * 900000);
     setOrderId(generatedOrderId);
 
     // 1. Prepare Order Document for Firestore
@@ -113,9 +112,8 @@ export const Checkout = () => {
 
     // 2. Save Order to Firestore DB
     await saveOrderToFirestore(orderPayload);
-    setSavedToDb(true);
 
-    // 3. Format WhatsApp Text Message
+    // 3. Format WhatsApp Text Message in 100% Clean English
     const formattedProducts = cart
       .map((item, index) => {
         const p = item.product;
@@ -185,13 +183,13 @@ Thank you for shopping with Riverran!`;
         <div className="space-y-2">
           <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-champagne-600 flex items-center justify-center gap-1.5">
             <Database className="w-3.5 h-3.5 text-emerald-700" />
-            <span>Saved to Firestore DB & Dispatched to WhatsApp</span>
+            <span>Saved to Database & WhatsApp Launched</span>
           </span>
           <h1 className="font-heading text-3xl sm:text-4xl font-bold text-noir-900">
             Order Saved & Launched
           </h1>
           <p className="text-xs text-noir-500 max-w-md mx-auto tracking-wide font-sans">
-            Your order <strong className="text-noir-900 font-heading">{orderId}</strong> is registered in Cloud Firestore DB with status <strong className="text-amber-600">Pending</strong> and sent to WhatsApp.
+            Your order <strong className="text-noir-900 font-heading">{orderId}</strong> is saved with status <strong className="text-amber-600">Pending</strong> and launched in WhatsApp.
           </p>
         </div>
 
@@ -201,7 +199,7 @@ Thank you for shopping with Riverran!`;
             <span className="font-heading font-bold text-noir-900 text-sm">Riverran</span>
           </div>
           <div className="flex justify-between border-b border-cream-200 pb-3">
-            <span className="text-noir-500 font-medium uppercase tracking-wider">Firestore DB Status</span>
+            <span className="text-noir-500 font-medium uppercase tracking-wider">Database Status</span>
             <span className="px-2.5 py-0.5 bg-amber-100 text-amber-800 font-bold rounded-full text-[10px] uppercase">
               Pending
             </span>
@@ -215,7 +213,7 @@ Thank you for shopping with Riverran!`;
             <span className="font-bold text-noir-900">{formData.phone}</span>
           </div>
           <div className="flex justify-between border-b border-cream-200 pb-3">
-            <span className="text-noir-500 font-medium uppercase tracking-wider">Address</span>
+            <span className="text-noir-500 font-medium uppercase tracking-wider">Complete Address</span>
             <span className="font-bold text-noir-900 text-right">
               {formData.address}, {formData.city}, {formData.state} - {formData.pinCode}
             </span>
@@ -261,13 +259,13 @@ Thank you for shopping with Riverran!`;
       <div>
         <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-champagne-600 flex items-center gap-1.5">
           <Database className="w-3.5 h-3.5 text-champagne-600" />
-          <span>Firestore DB + WhatsApp Checkout</span>
+          <span>Store: Riverran</span>
         </span>
         <h1 className="font-heading text-3xl sm:text-4xl font-bold text-noir-900 tracking-tight mt-1">
-          WhatsApp & Firestore Order Checkout
+          WhatsApp & Database Order Checkout
         </h1>
         <p className="text-xs text-noir-500 mt-2 font-sans">
-          Your order will be saved to Firestore DB with status <strong>Pending</strong> and sent via WhatsApp to <strong>+91 7291817567</strong>.
+          Enter your delivery details to generate a formatted WhatsApp message sent to <strong>+91 7291817567</strong>.
         </p>
       </div>
 
@@ -302,7 +300,7 @@ Thank you for shopping with Riverran!`;
                 <input
                   type="text"
                   name="fullName"
-                  placeholder="e.g. Jane Doe"
+                  placeholder="e.g. Ananya Sharma"
                   value={formData.fullName}
                   onChange={handleChange}
                   className={`w-full px-4 py-3 bg-cream-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-champagne-500 font-medium ${
@@ -328,7 +326,7 @@ Thank you for shopping with Riverran!`;
                 <input
                   type="tel"
                   name="phone"
-                  placeholder="e.g. +1 (555) 234-5678"
+                  placeholder="e.g. +91 98765 43210"
                   value={formData.phone}
                   onChange={handleChange}
                   className={`w-full px-4 py-3 bg-cream-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-champagne-500 font-medium font-mono ${
@@ -346,7 +344,7 @@ Thank you for shopping with Riverran!`;
                 <input
                   type="email"
                   name="email"
-                  placeholder="e.g. jane@example.com"
+                  placeholder="e.g. ananya@example.com"
                   value={formData.email}
                   onChange={handleChange}
                   className="w-full px-4 py-3 bg-cream-50 border border-champagne-300/60 rounded-xl focus:outline-none focus:ring-2 focus:ring-champagne-500 font-medium"
@@ -370,7 +368,7 @@ Thank you for shopping with Riverran!`;
                 <input
                   type="text"
                   name="address"
-                  placeholder="e.g. 742 Evergreen Terrace"
+                  placeholder="e.g. 14 Park Street, Bandra West"
                   value={formData.address}
                   onChange={handleChange}
                   className={`w-full px-4 py-3 bg-cream-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-champagne-500 font-medium ${
@@ -396,7 +394,7 @@ Thank you for shopping with Riverran!`;
                 <input
                   type="text"
                   name="city"
-                  placeholder="e.g. Springfield"
+                  placeholder="e.g. Mumbai"
                   value={formData.city}
                   onChange={handleChange}
                   className={`w-full px-4 py-3 bg-cream-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-champagne-500 font-medium ${
@@ -422,7 +420,7 @@ Thank you for shopping with Riverran!`;
                 <input
                   type="text"
                   name="state"
-                  placeholder="e.g. Oregon"
+                  placeholder="e.g. Maharashtra"
                   value={formData.state}
                   onChange={handleChange}
                   className={`w-full px-4 py-3 bg-cream-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-champagne-500 font-medium ${
@@ -448,7 +446,7 @@ Thank you for shopping with Riverran!`;
                 <input
                   type="text"
                   name="pinCode"
-                  placeholder="e.g. 97477"
+                  placeholder="e.g. 400001"
                   value={formData.pinCode}
                   onChange={handleChange}
                   className={`w-full px-4 py-3 bg-cream-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-champagne-500 font-medium font-mono ${
@@ -476,12 +474,12 @@ Thank you for shopping with Riverran!`;
             </div>
           </div>
 
-          {/* Store WhatsApp Target Number Configurator */}
+          {/* Store WhatsApp Target Phone Number Configurator */}
           <div className="bg-cream-100/70 p-6 rounded-3xl border border-champagne-300/60 space-y-2 text-xs">
             <div className="flex justify-between items-center">
               <span className="font-bold text-noir-900 uppercase tracking-wider text-[10px] flex items-center gap-1.5">
                 <MessageSquare className="w-4 h-4 text-emerald-700" />
-                <span>WhatsApp Target Phone Number</span>
+                <span>WhatsApp Target Number</span>
               </span>
               <input
                 type="text"
@@ -491,7 +489,7 @@ Thank you for shopping with Riverran!`;
               />
             </div>
             <p className="text-[11px] text-noir-500">
-              Orders will be saved to Firestore DB and pre-addressed to <code className="font-mono bg-white px-1.5 py-0.5 rounded text-emerald-800 font-bold">https://wa.me/{storeWhatsAppNumber}</code>
+              Orders will be saved to Database and sent to <code className="font-mono bg-white px-1.5 py-0.5 rounded text-emerald-800 font-bold">https://wa.me/{storeWhatsAppNumber}</code>
             </p>
           </div>
 
@@ -552,11 +550,11 @@ Thank you for shopping with Riverran!`;
             className="w-full py-4 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs uppercase tracking-[0.25em] rounded-full shadow-lg transition-all flex items-center justify-center gap-3"
           >
             <MessageSquare className="w-4 h-4" />
-            <span>{isSubmitting ? 'Saving to DB & Message...' : 'Order on WhatsApp'}</span>
+            <span>{isSubmitting ? 'Formatting Order...' : 'Order on WhatsApp'}</span>
           </button>
 
           <p className="text-[10px] text-center text-noir-400 font-sans">
-            Saves order document to Firestore DB & opens WhatsApp pre-addressed to <strong>+91 7291817567</strong>.
+            Saves order document to Database & opens WhatsApp addressing <strong>+91 7291817567</strong>.
           </p>
         </div>
 

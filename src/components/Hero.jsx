@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { ArrowRight, Sparkles, Award } from 'lucide-react';
 import { ScrollReveal } from './animations/ScrollReveal';
 import { ParallaxContainer } from './animations/ParallaxContainer';
 import { ImageReveal } from './animations/ImageReveal';
 import { RippleButton } from './animations/RippleButton';
+import { formatCurrency } from '../utils/formatCurrency';
 
 export const Hero = () => {
   return (
@@ -26,7 +26,7 @@ export const Hero = () => {
             <ScrollReveal direction="down" delay={0.1}>
               <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-cream-100 border border-champagne-400/40 text-champagne-600 text-xs font-bold uppercase tracking-[0.25em]">
                 <Sparkles className="w-3.5 h-3.5" />
-                <span>Spring / Summer 2026 Couture</span>
+                <span>Spring / Summer 2026 Collection</span>
               </div>
             </ScrollReveal>
 
@@ -41,7 +41,7 @@ export const Hero = () => {
 
             <ScrollReveal direction="up" delay={0.3}>
               <p className="text-base sm:text-lg text-noir-600 max-w-xl mx-auto lg:mx-0 font-sans leading-relaxed tracking-wide">
-                Impeccable French tailoring, 100% Mongolian cashmere, and handcrafted Italian leather. Designed in Paris for the discerning collector.
+                Impeccable tailoring, 100% Mongolian cashmere, and handcrafted full-grain leather. Crafted for the discerning individual.
               </p>
             </ScrollReveal>
 
@@ -55,9 +55,9 @@ export const Hero = () => {
                   </RippleButton>
                 </Link>
 
-                <Link to="/shop?category=Haute%20Couture">
+                <Link to="/shop?category=Luxury%20Apparel">
                   <RippleButton className="w-full sm:w-auto px-8 py-4 bg-transparent hover:bg-cream-100 text-noir-900 font-bold text-xs uppercase tracking-[0.25em] rounded-full border border-noir-900/30 transition-all text-center">
-                    Atelier Lookbook
+                    Explore Lookbook
                   </RippleButton>
                 </Link>
               </div>
@@ -73,15 +73,15 @@ export const Hero = () => {
                   </p>
                 </div>
                 <div>
-                  <p className="font-heading text-2xl font-bold text-noir-900">PARIS</p>
+                  <p className="font-heading text-2xl font-bold text-noir-900">PREMIUM</p>
                   <p className="text-[10px] font-bold uppercase tracking-widest text-champagne-600 mt-0.5">
-                    Haute Couture Studio
+                    Luxury Design Studio
                   </p>
                 </div>
                 <div>
                   <p className="font-heading text-2xl font-bold text-noir-900">FREE</p>
                   <p className="text-[10px] font-bold uppercase tracking-widest text-champagne-600 mt-0.5">
-                    Worldwide Shipping
+                    Express Shipping
                   </p>
                 </div>
               </div>
@@ -98,7 +98,7 @@ export const Hero = () => {
                 <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-champagne-300/60 bg-cream-100 group">
                   <ImageReveal
                     src="https://images.unsplash.com/photo-1539533018447-63fcce2678e3?auto=format&fit=crop&w=1000&q=80"
-                    alt="Le Manteau Cashmere Trench"
+                    alt="Classic Cashmere Double-Breasted Trench Coat"
                     className="h-[460px] sm:h-[540px]"
                     imgClassName="object-top transform group-hover:scale-105 transition-transform duration-1000"
                   />
@@ -108,14 +108,14 @@ export const Hero = () => {
                   <div className="absolute bottom-6 left-6 right-6 p-5 rounded-2xl glass-noir text-white flex items-center justify-between">
                     <div>
                       <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-champagne-400">
-                        Look No. 01
+                        Featured Piece
                       </span>
                       <h3 className="font-heading text-lg font-bold text-cream-50 mt-0.5">
-                        Le Manteau Cashmere Trench
+                        Classic Cashmere Trench Coat
                       </h3>
                     </div>
                     <span className="font-heading text-base font-bold text-champagne-400">
-                      $1,850
+                      {formatCurrency(18500)}
                     </span>
                   </div>
                 </div>
@@ -127,7 +127,7 @@ export const Hero = () => {
                   </div>
                   <div>
                     <p className="text-[10px] text-noir-500 font-bold uppercase tracking-wider">Craftsmanship</p>
-                    <p className="text-xs font-bold text-noir-900">Loro Piana Certified</p>
+                    <p className="text-xs font-bold text-noir-900">Pure Cashmere Certified</p>
                   </div>
                 </div>
 

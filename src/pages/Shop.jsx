@@ -48,11 +48,11 @@ export const Shop = () => {
           <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-champagne-600">
             Catalog Directory
           </span>
-          <h1 className="font-serif text-3xl sm:text-5xl font-bold text-noir-900 tracking-tight mt-1">
-            The Complete Atelier Collection
+          <h1 className="font-heading text-3xl sm:text-5xl font-bold text-noir-900 tracking-tight mt-1">
+            The Complete Luxury Collection
           </h1>
           <p className="text-xs text-noir-500 mt-2 tracking-wide font-sans max-w-lg">
-            Explore handcrafted haute couture, fine jewelry, and Italian leather goods from Paris and Milan.
+            Explore handcrafted apparel, fine jewelry, and premium leather goods.
           </p>
         </div>
 
@@ -60,7 +60,7 @@ export const Shop = () => {
         <div className="relative w-full md:w-80">
           <input
             type="text"
-            placeholder="Search haute pieces..."
+            placeholder="Search luxury pieces..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full pl-10 pr-10 py-3 text-xs bg-cream-50 border border-champagne-300 rounded-full focus:outline-none focus:ring-2 focus:ring-champagne-500 font-sans tracking-wide"
@@ -104,7 +104,7 @@ export const Shop = () => {
             <span>{mobileFilterOpen ? 'Close Filters' : 'Refine Catalog'}</span>
           </button>
 
-          <span className="text-xs font-bold text-noir-500 uppercase tracking-widest font-serif">
+          <span className="text-xs font-bold text-noir-500 uppercase tracking-widest font-heading">
             {products.length} Items
           </span>
         </div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Sparkles, Send, CheckCircle2, Globe, Shield, Award } from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
 
 export const Footer = () => {
   const [email, setEmail] = useState('');
@@ -22,26 +22,26 @@ export const Footer = () => {
         {/* Global Flagship Locations */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pb-16 border-b border-noir-800 text-center md:text-left">
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-champagne-400">Flagship Studio 01</span>
-            <h4 className="font-serif text-lg font-bold text-white mt-1">PARIS</h4>
-            <p className="text-xs text-noir-400 mt-1">12 Place Vendôme, 75001 Paris</p>
+            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-champagne-400">Flagship Store 01</span>
+            <h4 className="font-heading text-lg font-bold text-white mt-1">LONDON</h4>
+            <p className="text-xs text-noir-400 mt-1">160 Regent Street, London</p>
           </div>
 
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-champagne-400">Flagship Studio 02</span>
-            <h4 className="font-serif text-lg font-bold text-white mt-1">MILAN</h4>
-            <p className="text-xs text-noir-400 mt-1">Via Montenapoleone 8, Milano</p>
+            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-champagne-400">Flagship Store 02</span>
+            <h4 className="font-heading text-lg font-bold text-white mt-1">MUMBAI</h4>
+            <p className="text-xs text-noir-400 mt-1">Bandra West, Mumbai, Maharashtra</p>
           </div>
 
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-champagne-400">Flagship Studio 03</span>
-            <h4 className="font-serif text-lg font-bold text-white mt-1">NEW YORK</h4>
+            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-champagne-400">Flagship Store 03</span>
+            <h4 className="font-heading text-lg font-bold text-white mt-1">NEW YORK</h4>
             <p className="text-xs text-noir-400 mt-1">740 Fifth Avenue, New York, NY</p>
           </div>
 
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-champagne-400">Flagship Studio 04</span>
-            <h4 className="font-serif text-lg font-bold text-white mt-1">TOKYO</h4>
+            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-champagne-400">Flagship Store 04</span>
+            <h4 className="font-heading text-lg font-bold text-white mt-1">TOKYO</h4>
             <p className="text-xs text-noir-400 mt-1">6-7-1 Ginza, Chuo-ku, Tokyo</p>
           </div>
         </div>
@@ -52,26 +52,26 @@ export const Footer = () => {
           {/* Brand Philosophy */}
           <div className="lg:col-span-2 space-y-6">
             <Link to="/" className="flex flex-col">
-              <span className="font-serif text-2xl tracking-[0.25em] font-extrabold text-white uppercase">
+              <span className="font-heading text-2xl tracking-[0.25em] font-extrabold text-white uppercase">
                 RIVERRA<span className="text-champagne-400">N</span>
               </span>
               <span className="text-[9px] font-sans font-bold tracking-[0.4em] uppercase text-champagne-400 mt-0.5">
-                ATELIER HAUTE COUTURE
+                LUXURY FASHION STORE
               </span>
             </Link>
             <p className="text-xs text-noir-400 max-w-sm leading-relaxed tracking-wide font-sans">
-              Dedicated to pure silk, Mongolian cashmere, vegetable-tanned Italian leathers, and 18k Fairmined gold. Crafted in Paris for collectors around the globe.
+              Dedicated to pure silk, Mongolian cashmere, vegetable-tanned leathers, and 18k Fairmined gold. Crafted for individuals around the globe.
             </p>
             
             {/* VIP Newsletter */}
             <div className="pt-2 space-y-3">
               <h5 className="text-[10px] font-bold uppercase tracking-[0.25em] text-champagne-400">
-                Join the Private Atelier Circle
+                Join the Private VIP Inner Circle
               </h5>
               {subscribed ? (
                 <div className="flex items-center gap-2 text-emerald-400 text-xs font-semibold py-2">
                   <CheckCircle2 className="w-4 h-4" />
-                  <span>Welcome to the Private Circle. Lookbook delivered.</span>
+                  <span>Welcome to the VIP Circle. Lookbook delivered.</span>
                 </div>
               ) : (
                 <form onSubmit={handleSubscribe} className="flex max-w-md">
@@ -94,36 +94,36 @@ export const Footer = () => {
             </div>
           </div>
 
-          {/* Couture Collections */}
+          {/* Collections */}
           <div>
             <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-white mb-5">Collections</h4>
             <ul className="space-y-3 text-xs font-medium text-noir-400">
-              <li><Link to="/shop?category=Haute%20Couture" className="hover:text-champagne-400 transition-colors">Haute Couture</Link></li>
+              <li><Link to="/shop?category=Luxury%20Apparel" className="hover:text-champagne-400 transition-colors">Luxury Apparel</Link></li>
               <li><Link to="/shop?category=Leather%20Goods" className="hover:text-champagne-400 transition-colors">Leather Goods</Link></li>
               <li><Link to="/shop?category=Fine%20Jewelry" className="hover:text-champagne-400 transition-colors">Fine Jewelry</Link></li>
-              <li><Link to="/shop?category=Footwear" className="hover:text-champagne-400 transition-colors">Footwear Atelier</Link></li>
-              <li><Link to="/shop?category=Fragrance%20%26%20Beauty" className="hover:text-champagne-400 transition-colors">Niche Fragrance</Link></li>
+              <li><Link to="/shop?category=Footwear" className="hover:text-champagne-400 transition-colors">Footwear Collection</Link></li>
+              <li><Link to="/shop?category=Fragrance%20%26%20Beauty" className="hover:text-champagne-400 transition-colors">Signature Fragrance</Link></li>
             </ul>
           </div>
 
-          {/* Concierge Service */}
+          {/* Customer Concierge */}
           <div>
             <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-white mb-5">Concierge</h4>
             <ul className="space-y-3 text-xs font-medium text-noir-400">
               <li><a href="#private-appointment" className="hover:text-champagne-400 transition-colors">Private Appointments</a></li>
-              <li><a href="#bespoke" className="hover:text-champagne-400 transition-colors">Bespoke Tailoring</a></li>
-              <li><a href="#care" className="hover:text-champagne-400 transition-colors">Garment Care Guide</a></li>
-              <li><a href="#shipping" className="hover:text-champagne-400 transition-colors">Complimentary Express Delivery</a></li>
+              <li><a href="#custom-tailoring" className="hover:text-champagne-400 transition-colors">Custom Tailoring</a></li>
+              <li><a href="#care-guide" className="hover:text-champagne-400 transition-colors">Garment Care Guide</a></li>
+              <li><a href="#express-shipping" className="hover:text-champagne-400 transition-colors">Complimentary Express Delivery</a></li>
             </ul>
           </div>
 
-          {/* Brand Heritage */}
+          {/* Brand Story */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-white mb-5">Atelier</h4>
+            <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-white mb-5">Company</h4>
             <ul className="space-y-3 text-xs font-medium text-noir-400">
-              <li><a href="#heritage" className="hover:text-champagne-400 transition-colors">Our Heritage</a></li>
+              <li><a href="#our-story" className="hover:text-champagne-400 transition-colors">Our Story</a></li>
               <li><a href="#sustainability" className="hover:text-champagne-400 transition-colors">Fairmined & Organic Silk</a></li>
-              <li><a href="#press" className="hover:text-champagne-400 transition-colors">Vogue & Harper's Bazaar Press</a></li>
+              <li><a href="#press" className="hover:text-champagne-400 transition-colors">Press & Media</a></li>
               <li><a href="#careers" className="hover:text-champagne-400 transition-colors">Artisan Careers</a></li>
             </ul>
           </div>
@@ -132,10 +132,10 @@ export const Footer = () => {
 
         {/* Bottom Rights */}
         <div className="pt-8 border-t border-noir-800 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-noir-500">
-          <p>© {new Date().getFullYear()} RIVERRA N ATELIER S.A. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} RIVERRAN LUXURY FASHION LTD. All rights reserved.</p>
           <div className="flex items-center space-x-6">
-            <span className="hover:text-noir-300 cursor-pointer">Terms of Haute Service</span>
-            <span className="hover:text-noir-300 cursor-pointer">Privacy & GDPR</span>
+            <span className="hover:text-noir-300 cursor-pointer">Terms of Service</span>
+            <span className="hover:text-noir-300 cursor-pointer">Privacy Policy</span>
             <span className="hover:text-noir-300 cursor-pointer">Cookie Preferences</span>
           </div>
         </div>
