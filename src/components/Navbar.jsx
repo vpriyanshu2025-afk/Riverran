@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingBag, Search, Menu, X, Database } from 'lucide-react';
+import { ShoppingBag, Search, Menu, X, Database, User, ShieldCheck } from 'lucide-react';
 import { useCart } from '../hooks/useCart';
+import { useAuth } from '../context/AuthContext';
 
 export const Navbar = () => {
   const { totalItemsCount, toggleCartDrawer } = useCart();
+  const { user, openAuthModal } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -26,6 +28,8 @@ export const Navbar = () => {
     if (path === '/') return location.pathname === '/';
     return location.pathname.startsWith(path);
   };
+
+  const displayName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'Account';
 
   return (
     <header className="sticky top-0 z-40 w-full glass-luxury border-b border-champagne-400/20 transition-all duration-300">
@@ -112,6 +116,33 @@ export const Navbar = () => {
               )}
             </div>
 
+            {/* Customer Auth / Account Link */}
+            {user ? (
+              <Link
+                to="/account"
+                className="flex items-center gap-2 p-1.5 rounded-full hover:bg-cream-200/50 transition-all text-noir-900"
+                title="My Supabase Account"
+              >
+                <div className="w-7 h-7 bg-champagne-500 text-noir-950 rounded-full flex items-center justify-center font-bold text-xs uppercase shadow-sm">
+                  {displayName.charAt(0)}
+                </div>
+                <span className="hidden xl:inline text-xs font-bold uppercase tracking-wider max-w-[100px] truncate">
+                  {displayName}
+                </span>
+              </Link>
+            ) : (
+              <button
+                onClick={() => openAuthModal('login')}
+                className="p-2 text-noir-800 hover:text-champagne-600 transition-colors flex items-center gap-1.5"
+                aria-label="Account Login"
+              >
+                <User className="w-5 h-5 stroke-[1.5]" />
+                <span className="hidden sm:inline text-xs font-bold uppercase tracking-widest text-noir-900">
+                  Sign In
+                </span>
+              </button>
+            )}
+
             {/* Shopping Bag Drawer Trigger */}
             <button
               onClick={toggleCartDrawer}
@@ -174,6 +205,20 @@ export const Navbar = () => {
               <Link to="/shop" onClick={() => setMobileMenuOpen(false)} className="py-1 border-b border-cream-200">
                 Full Collection
               </Link>
+              {user ? (
+                <Link to="/account" onClick={() => setMobileMenuOpen(false)} className="py-1 border-b border-cream-200 text-sm font-sans uppercase tracking-widest text-noir-900 flex items-center gap-2 font-bold">
+                  <User className="w-4 h-4 text-champagne-600" />
+                  <span>My Account ({displayName})</span>
+                </Link>
+              ) : (
+                <button
+                  onClick={() => { setMobileMenuOpen(false); openAuthModal('login'); }}
+                  className="py-1 border-b border-cream-200 text-sm font-sans uppercase tracking-widest text-noir-900 flex items-center gap-2 text-left"
+                >
+                  <User className="w-4 h-4 text-champagne-600" />
+                  <span>Sign In / Register</span>
+                </button>
+              )}
               <Link to="/admin/orders" onClick={() => setMobileMenuOpen(false)} className="py-1 border-b border-cream-200 text-sm font-sans uppercase tracking-widest text-champagne-600 flex items-center gap-2">
                 <Database className="w-4 h-4" />
                 <span>Admin Orders Portal</span>

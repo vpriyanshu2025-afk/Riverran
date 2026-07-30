@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useCart } from '../hooks/useCart';
+import { useAuth } from '../context/AuthContext';
 import { formatCurrency } from '../utils/formatCurrency';
 import { saveOrderToFirestore } from '../utils/firebase';
+import { saveOrderToSupabase } from '../utils/supabase';
 import {
   Truck,
   ArrowRight,
@@ -23,6 +25,7 @@ import {
 
 export const Checkout = () => {
   const { cart, grandTotal, subtotal, shippingFee, estimatedTax, clearCart } = useCart();
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   // Target WhatsApp Phone Number
@@ -30,15 +33,25 @@ export const Checkout = () => {
 
   // Form State
   const [formData, setFormData] = useState({
-    fullName: 'Ananya Sharma',
+    fullName: user?.user_metadata?.full_name || 'Ananya Sharma',
     phone: '+91 98765 43210',
-    email: 'ananya@riverran-luxury.com',
+    email: user?.email || 'ananya@riverran-luxury.com',
     address: '14 Park Street, Bandra West',
     city: 'Mumbai',
     state: 'Maharashtra',
     pinCode: '400001',
     orderNotes: 'Please package in luxury gift wrap if possible.',
   });
+
+  useEffect(() => {
+    if (user) {
+      setFormData((prev) => ({
+        ...prev,
+        fullName: user.user_metadata?.full_name || prev.fullName,
+        email: user.email || prev.email,
+      }));
+    }
+  }, [user]);
 
   // Validation Error state
   const [errors, setErrors] = useState({});
@@ -72,7 +85,7 @@ export const Checkout = () => {
   };
 
   /**
-   * Save order to Firestore AND launch WhatsApp
+   * Save order to Supabase & Firestore AND launch WhatsApp
    */
   const handleWhatsAppCheckout = async (e) => {
     e.preventDefault();
@@ -86,9 +99,10 @@ export const Checkout = () => {
     const generatedOrderId = 'RIVERRAN-' + Math.floor(100000 + Math.random() * 900000);
     setOrderId(generatedOrderId);
 
-    // 1. Prepare Order Document for Firestore
+    // 1. Prepare Order Document
     const orderPayload = {
       orderRef: generatedOrderId,
+      userId: user?.id || null,
       storeName: 'Riverran',
       customer: { ...formData },
       products: cart.map((item) => ({
@@ -110,8 +124,11 @@ export const Checkout = () => {
       status: 'Pending',
     };
 
-    // 2. Save Order to Firestore DB
-    await saveOrderToFirestore(orderPayload);
+    // 2. Save Order to Supabase & Firestore DB
+    await Promise.all([
+      saveOrderToSupabase(orderPayload),
+      saveOrderToFirestore(orderPayload),
+    ]);
 
     // 3. Format WhatsApp Text Message in 100% Clean English
     const formattedProducts = cart
